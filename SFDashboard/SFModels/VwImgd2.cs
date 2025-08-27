@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace SFDashboard.SFModels
+{
+    [Keyless]
+    public partial class VwImgd2
+    {
+        [Column("Trx No")]
+        public int TrxNo { get; set; }
+        [Column("Line Item No")]
+        public short LineItemNo { get; set; }
+        [Column("Expiry Date")]
+        [StringLength(10)]
+        [Unicode(false)]
+        public string? ExpiryDate { get; set; }
+        [StringLength(25)]
+        public string? Grade { get; set; }
+        [Column("Loose Qty")]
+        public int? LooseQty { get; set; }
+        [Column("Manufacture Date")]
+        [StringLength(10)]
+        [Unicode(false)]
+        public string? ManufactureDate { get; set; }
+        [Column("Movement Trx No")]
+        public int? MovementTrxNo { get; set; }
+        [Column("New Grade")]
+        [StringLength(25)]
+        public string? NewGrade { get; set; }
+        [Column("Packing Qty")]
+        public int? PackingQty { get; set; }
+        [Column("Product Trx No")]
+        public int? ProductTrxNo { get; set; }
+        [Column("Space Area", TypeName = "numeric(13, 4)")]
+        public decimal? SpaceArea { get; set; }
+        [Column("Store No")]
+        [StringLength(14)]
+        public string? StoreNo { get; set; }
+        [Column(TypeName = "numeric(13, 4)")]
+        public decimal? Volume { get; set; }
+        [Column("Warehouse Code")]
+        [StringLength(6)]
+        public string? WarehouseCode { get; set; }
+        [Column(TypeName = "numeric(13, 4)")]
+        public decimal? Weight { get; set; }
+        [Column("Whole Qty")]
+        public int? WholeQty { get; set; }
+        [Column("Updated By")]
+        [StringLength(50)]
+        public string? UpdatedBy { get; set; }
+    }
+}

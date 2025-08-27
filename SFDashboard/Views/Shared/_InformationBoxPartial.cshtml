@@ -1,0 +1,85 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<SFDashboard.Models.TabDetail>
+@{
+    var resultBox = Model.Where(e => !e.dbdashboard.Type.StartsWith("Table") && e.dbdashboard.ArchiveFlag == "1" && string.IsNullOrEmpty(e.dbdashboard.GraphData)).OrderBy(x => x.DashBoardName).ThenBy(n => n.code2).ThenBy(n => n.Code).ToList();
+   // var count = Model.Where(e => !e.Type.StartsWith("Table") && string.IsNullOrEmpty(e.GraphData) && e.ArchiveFlag == "1").Count();
+   // int counter = 1;
+   // var res = Html.Raw(JsonConvert.SerializeObject(count));
+
+    var jsongraph = Html.Raw(JsonConvert.SerializeObject(ViewBag.Graph)); 
+
+    var mediumviewnongraph = Html.Raw(ViewBag.MediumViewNonGraph);
+    var largeviewnongraph = Html.Raw(ViewBag.LargeViewNonGraph);
+    //var mediumviewgraph = Html.Raw(JsonConvert.SerializeObject(ViewBag.MediumViewGraph));
+    //var largeviewgraph = Html.Raw(JsonConvert.SerializeObject(ViewBag.LargeViewGraph));
+    string value = string.Empty;
+}
+
+@foreach (var item in resultBox)
+{
+    @if (item.dbdashboard.Type == "Fixed")
+    {
+      @*  <div class="col-md-4 col-sm-4 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> @Html.DisplayFor(mdlitem => item.LabelName)</span>
+            <div class="count"> @Html.DisplayFor(mdlitem => item.Value)</div>
+        
+        </div>*@
+        <div class="animated flipInY col-lg-@(largeviewnongraph) col-md-@(mediumviewnongraph) col-sm-4">
+            <div class="tile-stats">
+                <div class="icon" style="color:@Html.DisplayFor(mdlitem => item.dbdashboard.IconColor);"><i class="@Html.DisplayFor(mdlitem => item.dbdashboard.Icon)" style="font-size:@Html.DisplayFor(mdlitem => item.dbdashboard.IconSize);"></i></div>
+                <div class="count">
+                    @*@Html.DisplayFor(mdlitem => item.dbdashboard.Value)*@
+                    @{                       
+                        if (item.dbdashboard.Value.ToString().Contains('.'))
+                        { value=String.Format("{0:#,##0.0000}", decimal.Parse(item.dbdashboard.Value.ToString())); }
+                        else { value=String.Format("{0:#,##0}", decimal.Parse(item.dbdashboard.Value.ToString())); }
+                    }
+                   @value
+                </div>
+                <h3>@Html.DisplayFor(mdlitem => item.dbdashboard.LabelName)</h3>
+               @* <p>Lorem ipsum psdea itgum rixt.</p>*@
+            </div>
+        </div>
+
+    }
+    else
+    {
+       @* @for (int i = 0; i < item.dbdashboard.Value; i++)
+        {*@
+            <div class="animated flipInY col-lg-@(largeviewnongraph) col-md-@(mediumviewnongraph) col-sm-4">
+            <div class="tile-stats">
+                    <div class="icon" style="color:@Html.DisplayFor(mdlitem => item.dbdashboard.IconColor);"><i class="@Html.DisplayFor(mdlitem => item.dbdashboard.Icon)" style="font-size:@Html.DisplayFor(mdlitem => item.dbdashboard.IconSize);"></i></div>
+                <div class="count">
+                    @{
+                        string tamp = item.dbdashboard.ListInformationBox[0].m_value == "" || item.dbdashboard.ListInformationBox[0].m_value == null ? "0" : item.dbdashboard.ListInformationBox[0].m_value;
+                        
+                        if (item.dbdashboard.ListInformationBox[0].m_value.Contains('.'))
+                        { value = String.Format("{0:#,##0.0000}", decimal.Parse(tamp)); }
+                        else { value = String.Format("{0:#,##0}", decimal.Parse(tamp)); }
+                    }
+                    @value
+                 @* @Html.DisplayFor(mdlitem => item.dbdashboard.ListInformationBox[0].m_value)*@</div>
+                    <h3>@Html.DisplayFor(mdlitem => item.dbdashboard.LabelName)</h3>
+                 
+             
+            </div>
+        </div>
+          @*  <div class="col-md-4 col-sm-4 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> @Html.DisplayFor(mdlitem => item.LabelName)</span>
+                <div class="count"> @Html.DisplayFor(mdlitem => item.ListInformationBox[i].m_value)</div>
+             
+                @if (item.GraphData != null && item.GraphData != "")
+                {
+                <div id="chart_plot_0@(counter)" class="demo-placeholder"></div>
+                    counter++;
+                }
+            </div>*@
+      @*  }*@
+
+     
+
+    }
+
+  
+
+}

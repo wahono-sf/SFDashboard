@@ -1,0 +1,871 @@
+﻿@model IEnumerable<SFDashboard.SFModels.WrAppList>
+@using Newtonsoft.Json
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Menu List";
+
+}
+
+@functions {
+    public List<SFDashboard.SFModels.WrAppList> Recursive(string nodeparent, IEnumerable<SFDashboard.SFModels.WrAppList> obj, List<SFDashboard.SFModels.WrAppList> s)
+    {
+        foreach (var subhead in obj.Where(a => a.NodeParent == nodeparent).OrderBy(a => a.SortNo))
+        {
+            s.Add(subhead);
+            Recursive(subhead.NodeName, obj, s);
+        }
+        return s;
+    }
+}
+
+<style>
+    .data-grid {
+        min-height: 700px;
+        max-width: 1500px;
+    }
+
+        .data-grid .dx-datagrid-header-panel {
+            padding: 0;
+            background-image: linear-gradient(to right, purple, red);
+        }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar {
+                margin: 0;
+                padding-right: 20px;
+                background-color: transparent;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-items-container {
+                height: 70px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:not(:first-child) {
+                background-image: linear-gradient(to right, purple, red);
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:last-child {
+                padding-right: 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-selectbox {
+                margin: auto 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-button {
+                margin: auto 0;
+            }
+
+    .gridDeleteSelected {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        margin: 1px;
+        top: 0;
+    }
+
+        .gridDeleteSelected .dx-button-text {
+            line-height: 0;
+        }
+
+</style>
+
+<div class="right_col" role="main">
+    <div class="row" style="display: block;">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="row x_title">
+                <div class="col-md-12">
+                    <h2>App List</h2>
+                </div>
+            </div>
+            <div class="x_content">
+                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="air-tab" data-toggle="tab" href="#air" role="tab" aria-controls="air" aria-selected="true">Air</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="sea-tab" data-toggle="tab" href="#sea" role="tab" aria-controls="sea" aria-selected="false">Sea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="warehouse-tab" data-toggle="tab" href="#warehouse" role="tab" aria-controls="warehouse" aria-selected="false">Warehouse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="transport-tab" data-toggle="tab" href="#transport" role="tab" aria-controls="transport" aria-selected="false">Transport</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="false">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="statistics-tab" data-toggle="tab" href="#statistics" role="tab" aria-controls="statistics" aria-selected="false">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="reference-tab" data-toggle="tab" href="#reference" role="tab" aria-controls="reference" aria-selected="false">Reference</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="others-tab" data-toggle="tab" href="#others" role="tab" aria-controls="others" aria-selected="false">Others</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="air" role="tabpanel" aria-labelledby="air-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridAir"></div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="sea" role="tabpanel" aria-labelledby="sea-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridSea"></div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="warehouse" role="tabpanel" aria-labelledby="warehouse-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridWarehouse"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="transport" role="tabpanel" aria-labelledby="transport-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridTransport"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridAccount"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridStatistics"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="reference" role="tabpanel" aria-labelledby="reference-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridReference"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="others" role="tabpanel" aria-labelledby="others-tab">
+                        <div class="data-grid">
+                            <div class="gridDeleteSelected"></div>
+                            <div id="gridOther"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $(() => {
+            const url = window.location.href;
+            const dataGridAir = $('#gridAir').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Air`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                showBorders: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridAir.refresh();
+                                },
+                            },
+                        },
+
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridAir.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridSea = $('#gridSea').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Sea`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                showBorders: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridSea.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridSea.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridWH = $('#gridWarehouse').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=WareHouse`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),             
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridWH.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridWH.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridTransport = $('#gridTransport').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Transport`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridTransport.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridTransport.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridAccount = $('#gridAccount').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Account`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridAccount.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridAccount.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridReference = $('#gridReference').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Reference`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridReference.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridReference.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridOther = $('#gridOther').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Other`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridOther.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridOther.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+            const dataGridStatistics = $('#gridStatistics').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "NodeName",
+                    loadUrl: `${url}/GetWrapplist?nodename=Statistics`,
+                    insertUrl: `${url}/InsertMenu`,
+                    updateUrl: `${url}/UpdateMenu`,
+                    deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function(method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                showBorders: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                editing: {
+                    mode: 'cell',
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                },
+                paging: {
+                    enabled: true,
+                },
+                filterRow: { visible: true },
+                columns: [
+                    {
+                        caption: "",
+                        dataField: "UseFlag",
+                        dataType: "boolean",
+                        allowFiltering: false,
+                    },
+                    'NodeName',
+                    'NodeParent',
+                    'CommentText',
+                    'NodeType',
+                    'SortNo',
+                    'ViewName',
+                    'ViewCondition',
+                    'FrmName',
+                    'ViewKey',
+                    'MainTableName',
+                    'FormDefaultFile',
+                    'MenuUrl',
+                    'MenuUrlEntry',
+                    'CrossDatabase',
+                    'DefaultHide',
+                    'LockField',
+                    'HideTab',
+                    'Parameter',
+                    'FilterSalesmanFlag',
+                    'StatusList',
+                ],
+                onEditorPreparing: function(e) {
+                    if (e.dataField === 'UseFlag' && e.parentType === 'dataRow') {
+                        e.editorName = "dxCheckBox";
+                        e.editorOptions = {
+                            value: e.value === "Y" || e.value == null ? true : false,
+                            onValueChanged: function(args) {
+                                e.setValue(args.value ? "Y" : "N");
+                            }
+                        }
+                    }
+                },
+                toolbar: {
+                    items: [
+                        {
+                            name: 'addRowButton',
+                            showText: 'always',
+                        }, {
+                            location: 'after',
+                            widget: 'dxButton',
+                            options: {
+                                icon: 'refresh',
+                                onClick() {
+                                    dataGridStatistics.refresh();
+                                },
+                            },
+                        },
+                    ],
+                },
+                onSelectionChanged(data) {
+                    dataGridStatistics.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                },
+            }).dxDataGrid('instance');
+
+        });
+
+    });
+</script>

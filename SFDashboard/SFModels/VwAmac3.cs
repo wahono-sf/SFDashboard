@@ -1,0 +1,294 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace SFDashboard.SFModels
+{
+    [Keyless]
+    public partial class VwAmac3
+    {
+        [Column("Trx No")]
+        public int TrxNo { get; set; }
+        [Column("Amount 01", TypeName = "decimal(13, 3)")]
+        public decimal? Amount01 { get; set; }
+        [Column("Amount 02", TypeName = "decimal(13, 3)")]
+        public decimal? Amount02 { get; set; }
+        [Column("Amount 03", TypeName = "decimal(13, 3)")]
+        public decimal? Amount03 { get; set; }
+        [Column("Amount 04", TypeName = "decimal(13, 3)")]
+        public decimal? Amount04 { get; set; }
+        [Column("Amount 05", TypeName = "decimal(13, 3)")]
+        public decimal? Amount05 { get; set; }
+        [Column("Amount 06", TypeName = "decimal(13, 3)")]
+        public decimal? Amount06 { get; set; }
+        [Column("Amount 07", TypeName = "decimal(13, 3)")]
+        public decimal? Amount07 { get; set; }
+        [Column("Amount 08", TypeName = "decimal(13, 3)")]
+        public decimal? Amount08 { get; set; }
+        [Column("Amount 09", TypeName = "decimal(13, 3)")]
+        public decimal? Amount09 { get; set; }
+        [Column("Amount 10", TypeName = "decimal(13, 3)")]
+        public decimal? Amount10 { get; set; }
+        [Column("Amount 11", TypeName = "decimal(13, 3)")]
+        public decimal? Amount11 { get; set; }
+        [Column("Amount 12", TypeName = "decimal(13, 3)")]
+        public decimal? Amount12 { get; set; }
+        [Column("Amount 13", TypeName = "decimal(13, 3)")]
+        public decimal? Amount13 { get; set; }
+        [Column("Amount 14", TypeName = "decimal(13, 3)")]
+        public decimal? Amount14 { get; set; }
+        [Column("Amount 15", TypeName = "decimal(13, 3)")]
+        public decimal? Amount15 { get; set; }
+        [Column("Amount 16", TypeName = "decimal(13, 3)")]
+        public decimal? Amount16 { get; set; }
+        [Column("Amount 17", TypeName = "decimal(13, 3)")]
+        public decimal? Amount17 { get; set; }
+        [Column("Amount 18", TypeName = "decimal(13, 3)")]
+        public decimal? Amount18 { get; set; }
+        [Column("Amount 19", TypeName = "decimal(13, 3)")]
+        public decimal? Amount19 { get; set; }
+        [Column("Amount 20", TypeName = "decimal(13, 3)")]
+        public decimal? Amount20 { get; set; }
+        [Column("Break Point 01", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint01 { get; set; }
+        [Column("Break Point 02", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint02 { get; set; }
+        [Column("Break Point 03", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint03 { get; set; }
+        [Column("Break Point 04", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint04 { get; set; }
+        [Column("Break Point 05", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint05 { get; set; }
+        [Column("Break Point 06", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint06 { get; set; }
+        [Column("Break Point 07", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint07 { get; set; }
+        [Column("Break Point 08", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint08 { get; set; }
+        [Column("Break Point 09", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint09 { get; set; }
+        [Column("Break Point 10", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint10 { get; set; }
+        [Column("Break Point 11", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint11 { get; set; }
+        [Column("Break Point 12", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint12 { get; set; }
+        [Column("Break Point 13", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint13 { get; set; }
+        [Column("Break Point 14", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint14 { get; set; }
+        [Column("Break Point 15", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint15 { get; set; }
+        [Column("Break Point 16", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint16 { get; set; }
+        [Column("Break Point 17", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint17 { get; set; }
+        [Column("Break Point 18", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint18 { get; set; }
+        [Column("Break Point 19", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint19 { get; set; }
+        [Column("Break Point 20", TypeName = "decimal(13, 4)")]
+        public decimal? BreakPoint20 { get; set; }
+        [Column("Commodity Code 01")]
+        [StringLength(10)]
+        public string? CommodityCode01 { get; set; }
+        [Column("Commodity Code 02")]
+        [StringLength(10)]
+        public string? CommodityCode02 { get; set; }
+        [Column("Commodity Code 03")]
+        [StringLength(10)]
+        public string? CommodityCode03 { get; set; }
+        [Column("Commodity Code 04")]
+        [StringLength(10)]
+        public string? CommodityCode04 { get; set; }
+        [Column("Commodity Code 05")]
+        [StringLength(10)]
+        public string? CommodityCode05 { get; set; }
+        [Column("Commodity Code 06")]
+        [StringLength(10)]
+        public string? CommodityCode06 { get; set; }
+        [Column("Commodity Code 07")]
+        [StringLength(10)]
+        public string? CommodityCode07 { get; set; }
+        [Column("Commodity Code 08")]
+        [StringLength(10)]
+        public string? CommodityCode08 { get; set; }
+        [Column("Commodity Code 09")]
+        [StringLength(10)]
+        public string? CommodityCode09 { get; set; }
+        [Column("Commodity Code 10")]
+        [StringLength(10)]
+        public string? CommodityCode10 { get; set; }
+        [Column("Commodity Code 11")]
+        [StringLength(10)]
+        public string? CommodityCode11 { get; set; }
+        [Column("Commodity Code 12")]
+        [StringLength(10)]
+        public string? CommodityCode12 { get; set; }
+        [Column("Commodity Code 13")]
+        [StringLength(10)]
+        public string? CommodityCode13 { get; set; }
+        [Column("Commodity Code 14")]
+        [StringLength(10)]
+        public string? CommodityCode14 { get; set; }
+        [Column("Commodity Code 15")]
+        [StringLength(10)]
+        public string? CommodityCode15 { get; set; }
+        [Column("Commodity Code 16")]
+        [StringLength(10)]
+        public string? CommodityCode16 { get; set; }
+        [Column("Commodity Code 17")]
+        [StringLength(10)]
+        public string? CommodityCode17 { get; set; }
+        [Column("Commodity Code 18")]
+        [StringLength(10)]
+        public string? CommodityCode18 { get; set; }
+        [Column("Commodity Code 19")]
+        [StringLength(10)]
+        public string? CommodityCode19 { get; set; }
+        [Column("Commodity Code 20")]
+        [StringLength(10)]
+        public string? CommodityCode20 { get; set; }
+        [Column("Percent Flag 01")]
+        [StringLength(1)]
+        public string? PercentFlag01 { get; set; }
+        [Column("Percent Flag 02")]
+        [StringLength(1)]
+        public string? PercentFlag02 { get; set; }
+        [Column("Percent Flag 03")]
+        [StringLength(1)]
+        public string? PercentFlag03 { get; set; }
+        [Column("Percent Flag 04")]
+        [StringLength(1)]
+        public string? PercentFlag04 { get; set; }
+        [Column("Percent Flag 05")]
+        [StringLength(1)]
+        public string? PercentFlag05 { get; set; }
+        [Column("Percent Flag 06")]
+        [StringLength(1)]
+        public string? PercentFlag06 { get; set; }
+        [Column("Percent Flag 07")]
+        [StringLength(1)]
+        public string? PercentFlag07 { get; set; }
+        [Column("Percent Flag 08")]
+        [StringLength(1)]
+        public string? PercentFlag08 { get; set; }
+        [Column("Percent Flag 09")]
+        [StringLength(1)]
+        public string? PercentFlag09 { get; set; }
+        [Column("Percent Flag 10")]
+        [StringLength(1)]
+        public string? PercentFlag10 { get; set; }
+        [Column("Percent Flag 11")]
+        [StringLength(1)]
+        public string? PercentFlag11 { get; set; }
+        [Column("Percent Flag 12")]
+        [StringLength(1)]
+        public string? PercentFlag12 { get; set; }
+        [Column("Percent Flag 13")]
+        [StringLength(1)]
+        public string? PercentFlag13 { get; set; }
+        [Column("Percent Flag 14")]
+        [StringLength(1)]
+        public string? PercentFlag14 { get; set; }
+        [Column("Percent Flag 15")]
+        [StringLength(1)]
+        public string? PercentFlag15 { get; set; }
+        [Column("Percent Flag 16")]
+        [StringLength(1)]
+        public string? PercentFlag16 { get; set; }
+        [Column("Percent Flag 17")]
+        [StringLength(1)]
+        public string? PercentFlag17 { get; set; }
+        [Column("Percent Flag 18")]
+        [StringLength(1)]
+        public string? PercentFlag18 { get; set; }
+        [Column("Percent Flag 19")]
+        [StringLength(1)]
+        public string? PercentFlag19 { get; set; }
+        [Column("Percent Flag 20")]
+        [StringLength(1)]
+        public string? PercentFlag20 { get; set; }
+        [Column("Product Code")]
+        [StringLength(10)]
+        public string? ProductCode { get; set; }
+        [Column("Rate Class Code 01")]
+        [StringLength(1)]
+        public string? RateClassCode01 { get; set; }
+        [Column("Rate Class Code 02")]
+        [StringLength(1)]
+        public string? RateClassCode02 { get; set; }
+        [Column("Rate Class Code 03")]
+        [StringLength(1)]
+        public string? RateClassCode03 { get; set; }
+        [Column("Rate Class Code 04")]
+        [StringLength(1)]
+        public string? RateClassCode04 { get; set; }
+        [Column("Rate Class Code 05")]
+        [StringLength(1)]
+        public string? RateClassCode05 { get; set; }
+        [Column("Rate Class Code 06")]
+        [StringLength(1)]
+        public string? RateClassCode06 { get; set; }
+        [Column("Rate Class Code 07")]
+        [StringLength(1)]
+        public string? RateClassCode07 { get; set; }
+        [Column("Rate Class Code 08")]
+        [StringLength(1)]
+        public string? RateClassCode08 { get; set; }
+        [Column("Rate Class Code 09")]
+        [StringLength(1)]
+        public string? RateClassCode09 { get; set; }
+        [Column("Rate Class Code 10")]
+        [StringLength(1)]
+        public string? RateClassCode10 { get; set; }
+        [Column("Rate Class Code 11")]
+        [StringLength(1)]
+        public string? RateClassCode11 { get; set; }
+        [Column("Rate Class Code 12")]
+        [StringLength(1)]
+        public string? RateClassCode12 { get; set; }
+        [Column("Rate Class Code 13")]
+        [StringLength(1)]
+        public string? RateClassCode13 { get; set; }
+        [Column("Rate Class Code 14")]
+        [StringLength(1)]
+        public string? RateClassCode14 { get; set; }
+        [Column("Rate Class Code 15")]
+        [StringLength(1)]
+        public string? RateClassCode15 { get; set; }
+        [Column("Rate Class Code 16")]
+        [StringLength(1)]
+        public string? RateClassCode16 { get; set; }
+        [Column("Rate Class Code 17")]
+        [StringLength(1)]
+        public string? RateClassCode17 { get; set; }
+        [Column("Rate Class Code 18")]
+        [StringLength(1)]
+        public string? RateClassCode18 { get; set; }
+        [Column("Rate Class Code 19")]
+        [StringLength(1)]
+        public string? RateClassCode19 { get; set; }
+        [Column("Rate Class Code 20")]
+        [StringLength(1)]
+        public string? RateClassCode20 { get; set; }
+        [Column("Created By")]
+        [StringLength(50)]
+        public string CreatedBy { get; set; } = null!;
+        [Column("Created At")]
+        [StringLength(16)]
+        [Unicode(false)]
+        public string? CreatedAt { get; set; }
+        [Column("Updated By")]
+        [StringLength(50)]
+        public string UpdatedBy { get; set; } = null!;
+        [Column("Updated At")]
+        [StringLength(16)]
+        [Unicode(false)]
+        public string? UpdatedAt { get; set; }
+        [StringLength(3)]
+        public string Status { get; set; } = null!;
+    }
+}

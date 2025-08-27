@@ -1,0 +1,156 @@
+﻿@model IEnumerable<SFDashboard.Models.TabDetail>
+@using Newtonsoft.Json
+@{
+    var TableHeader = Model.Where(x => x.dbdashboard.Type.StartsWith("Table") && x.dbdashboard.ArchiveFlag == "1").ToList();
+    var count = Model.Where(e => e.dbdashboard.Type.StartsWith("Table") && e.dbdashboard.ArchiveFlag == "1").Count();
+    var firstcountertable = Model.Where(e => e.dbdashboard.Type.StartsWith("Table") && e.dbdashboard.ArchiveFlag == "1").OrderBy(e => e.dbdashboard.dataCount).Select(j => j.dbdashboard.dataCount).FirstOrDefault();
+
+    int counter = firstcountertable;
+    var res = Html.Raw(JsonConvert.SerializeObject(count));
+    var jsontables = Html.Raw(JsonConvert.SerializeObject(ViewBag.Tables));
+    var tabcode = 0;
+}
+
+@foreach (var hd in TableHeader)
+{
+    tabcode = hd.TabCode;
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+                <h2>@hd.dbdashboard.LabelName</h2>
+
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div style="overflow:auto;max-height:600px">
+                    <div id="table@(hd.TabCode)@(counter)" class="demo-placeholder"></div>
+                    @*
+
+                <table class="Table-Dynamic table table-striped jambo_table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                <thead>
+                <tr class="headings">
+                @{
+                var ColumnHead = Model.Where(x => x.code2 == hd.code2).ToList();
+                foreach (var col in ColumnHead)
+                {
+                if (col.ColumnName != null)
+                {
+                foreach (var cols in col.ColumnName)
+                {
+                <th column-title>@cols</th>
+                }
+                }
+
+                }
+                }
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                var ColumnBody = Model.Where(x => x.code2 == hd.code2).ToList();
+                foreach (var rows in ColumnBody)
+                {
+                if (rows.RowField != null)
+                {
+                @foreach (var row in rows.RowField)
+                {
+                <tr>
+                @foreach (var itemrow in row)
+                {
+                <td>@itemrow</td>
+
+                }
+                </tr>
+                }
+
+                }
+                }
+                }
+                </tbody>
+                </table>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    counter++;
+}
+<script>
+    $(document).ready(function () {
+        // $('.Table-Dynamic').DataTable();
+
+        const tables = JSON.parse(@jsontables);
+        let startidx = parseInt(@firstcountertable);
+        let counttables = parseInt(startidx) + parseInt(@res) - 1;
+        
+        for (let i = @firstcountertable; i <= parseInt(counttables); i++) {           
+            $('#table@(tabcode)' + i).dxDataGrid({
+                dataSource: tables[i-1],
+                height: 500,
+                rowAlternationEnabled: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                showBorders: true,
+                paging: {
+                    enabled: true,
+                    pageSize: 20,
+                },
+                scrolling: {
+                    mode: 'virtual',
+                },
+                pager: {
+                    visible: true,
+                    allowedPageSizes: [5, 10, 25, 50, 'all'],
+                    showPageSizeSelector: true,
+                    showInfo: true,
+                    showNavigationButtons: true,
+                },
+                export: {
+                    enabled: true,
+                    allowExportSelectedData: true,
+                },
+                onExporting(e) {
+                    var todayDate = new Date().toISOString().slice(0, 10);
+                    const workbook = new ExcelJS.Workbook();
+                    const worksheet = workbook.addWorksheet(todayDate);
+
+                    DevExpress.excelExporter.exportDataGrid({
+                        component: e.component,
+                        worksheet,
+                        autoFilterEnabled: true,
+                    }).then(() => {
+                        workbook.xlsx.writeBuffer().then((buffer) => {
+                            saveAs(new Blob([buffer], { type: 'application/octet-stream' }), todayDate + '.xlsx');
+                        });
+                    });
+                    e.cancel = true;
+                },
+                filterRow: { visible: true },
+                filterPanel: { visible: true },
+                hoverStateEnabled: true,
+                selection: {
+                    mode: 'multiple',
+                },
+            }).dxDataGrid('instance');
+        }
+    });
+
+
+</script>
+

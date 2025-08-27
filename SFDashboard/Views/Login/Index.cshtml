@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "SysMagic - Login";
+}
+<style>
+    img {
+        width: 90%;
+        max-width: 600px;
+        height: 40%;
+        max-height: 600px;
+    }
+    .validation-summary-errors ul, .validation-summary-errors li {
+        list-style: none;
+        display: inline;
+        padding: 0;
+    }
+</style>
+
+<script>
+
+    window.onload = function () {
+
+        var checkremember = localStorage.getItem('remember');
+        if (checkremember == "true") {
+            document.getElementById("username").value = localStorage.getItem('username');
+            document.getElementById("remember").checked = true;
+        }
+     
+
+    }
+
+
+    function checktick() {
+
+        var check = document.getElementById("remember").checked;
+        if (check == true) {
+            localStorage.setItem('username', document.getElementById("username").value);
+            localStorage.setItem('remember', check);
+        }
+        else {
+            localStorage.removeItem('username')
+            localStorage.removeItem('remember');
+        }
+    }
+
+
+</script>
+@*    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+
+    <div class="login_wrapper">
+        <div class="animate form login_form">          
+            <section class="login_content">
+                <div>
+                    <img alt="" border="0" src="~/images/logo_nav_login.png" height="80" width="260" />
+                </div>
+                <form asp-action="Login" method="post">
+                    <div><h1>Login Form</h1></div>
+                    <div>
+                        <input type="text" class="form-control" placeholder="Username" name="UserName" required="" />
+                    </div>
+                    <div>
+                        <input type="password" class="form-control" placeholder="Password" name="Password" required="" />
+                    </div>
+                    <div>
+                    <b style="color: red">
+                        @Html.ValidationSummary(true)
+                    </b>
+                       @* <a class="btn btn-danger btn-lg submit" href="DashboardModel">Log in</a>
+                        <input type="submit" class="btn btn-danger btn-lg submit" value="Log in" />
+          
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="separator">   
+                       
+                        <div class="clearfix"></div>
+                        <br />
+
+                        <div>                      
+                            <p>©2022 All Rights Reserved SysMagic</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        @* <div id="register" class="animate form registration_form">
+        <section class="login_content">
+        <form>
+        <h1>Create Account</h1>
+        <div>
+        <input type="text" class="form-control" placeholder="Username" required="" />
+        </div>
+        <div>
+        <input type="email" class="form-control" placeholder="Email" required="" />
+        </div>
+        <div>
+        <input type="password" class="form-control" placeholder="Password" required="" />
+        </div>
+        <div>
+        <a class="btn btn-default submit" href="index.html">Submit</a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="separator">
+        <p class="change_link">Already a member ?
+        <a href="#signin" class="to_register"> Log in </a>
+        </p>
+
+        <div class="clearfix"></div>
+        <br />
+
+        <div>
+        <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+        <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+        </div>
+        </div>
+        </form>
+        </section>
+        </div>
+    </div>*@
+
+
+<div class="login clearfix">
+    <div class="login-center">
+        <img src="~/images/logo_login.jpg" alt="">
+    </div>
+    <div class="login-center">
+        <p class="col-xs-offset-2 col-xs-7 text-left" style="font-size:12px">
+            Welcome to
+            <strong id="st">SysMagic KPI Dashboard System</strong>
+            @*<strong id="tnt">Management System</strong>*@
+            <sup style="font-weight: bolder;"></sup>
+        </p>
+        <p>&nbsp;</p>
+        <form asp-action="Login" method="post">
+            <div class="form-horizontal" role="form" style="margin:0 auto;">
+             @*   <div class="form-group has-feedback" style="left:100px">
+                    <div class="col-xs-7 inner-addon left-addon">
+                        <i class="glyphicon glyphicon-home"></i>
+                        <input type="text" class="form-control" id="connname" name="ConnName" placeholder="Company" required="" value="@(company)">
+                    </div>
+                </div>*@
+                <div class="form-group has-feedback" style="left:100px">
+                    <div class="col-xs-7 inner-addon left-addon">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <input type="text" class="form-control" id="username" name="UserName" placeholder="User ID" required=""@* value="@(uname)"*@>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" style="left:100px">
+                    <div class="col-xs-7  inner-addon left-addon">
+                        <i class="glyphicon glyphicon-lock"></i>
+                        <input type="password" class="form-control" id="password" name="Password" placeholder="Password" required="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-7 text-right">
+                        <input type="checkbox" name="Remember" value="Remember" id="remember" > Remember Me<br>
+                    </div>
+                </div>
+                <p>
+                    <b style="color: red">
+                        @Html.ValidationSummary(true)
+                    </b>
+                </p>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-7">
+                        <button type="submit" class="btn btn-danger btn-lg submit" style="width:100%;" onclick="checktick()">
+                            Sign in
+                            <span class="glyphicon glyphicon-log-in"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none;">
+                    <div class="col-xs-offset-2 col-xs-7">
+                        <a class="btn btn-default btn-lg" style="width:100%;" id="submit">
+                            Register Now<span class="glyphicon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div>
+            <p>©2024 All Rights Reserved SysMagic</p>
+        </div>
+
+        @*  <p class="text-right">
+        <button type="button" class="btn btn-link">Terms of use</button>
+        <span>|</span>
+        <button type="button" class="btn btn-link">Privacy Policy</button>
+        </p>*@
+    </div>
+</div>
+

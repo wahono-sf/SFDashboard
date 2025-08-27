@@ -1,0 +1,368 @@
+﻿@model IEnumerable<SFDashboard.Models.TabDetail>
+@using System.Data;
+@using Newtonsoft.Json;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+    //var resultDashboardName = Model.Where(e => !e.Type.StartsWith("Table")).GroupBy(x => x.DashBoardName).ToList();
+    var resultDashboardName = Model.Where(e => e.dbdashboard.ArchiveFlag == "1" && !e.dbdashboard.Type.StartsWith("Table")).GroupBy(x => x.DashBoardName).ToList();
+    var City = ViewBag.City;
+    var BusinessParty = ViewBag.BusinessParty;
+    var counttab = ViewBag.CountTab;
+    var tabs = Html.Raw(JsonConvert.SerializeObject(ViewBag.Tab));
+    var tabuser = ViewBag.TabUser;
+    var timer = Html.Raw(JsonConvert.SerializeObject(ViewBag.Timer));
+    int totaltab = 1;
+}
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            var i, tabcontent;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                if (i > 0) {
+                    tabcontent[i].style.display = "none";
+                }
+                else {
+                    tabcontent[i].style.display = "block";
+                }
+
+            }
+
+
+            $('.Table-Dynamic').DataTable();
+
+            function reload() {
+                document.location.reload();
+            }
+
+            var timers = parseInt(@timer) * 1000;
+            setTimeout(reload, (timers));
+
+        });
+
+
+        $('#tabs-container').dxTabs({
+            dataSource: JSON.parse(@tabs),
+            scrollByContent: true,
+            showNavButtons: true,
+            selectedIndex: 0,
+            onItemClick(e) {
+                // console.log(e.itemData.text);
+                //selectBox.option('value', e.itemData.id);
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                document.getElementById(e.itemData.text).style.display = "block";
+            },
+        });
+
+
+
+        jQuery(document).ready(function () {
+            jQuery('#worldmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#666666',
+                enableZoom: true,
+                showTooltip: true,
+                values: sample_data,
+                scaleColors: ['#E6F2F0', '#149B7E'],
+                normalizeFunction: 'polynomial',
+                onRegionClick: function (element, code, region) {
+                    //var message = 'You clicked "'
+                    //    + region
+                    //    + '" which has the code: '
+                    //    + code.toUpperCase();
+
+                    //alert(message);
+                    $('#country_name').html(region);
+                    //  console.log(code);
+                    //$('#tbl_country_map').html(response.view2);
+                    if (code == "id") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>20%</td></tr><tr><td>Air Import Job</td> <td>12%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+                    }
+                    else if (code == "cn") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>10%</td></tr><tr><td>Air Import Job</td> <td>22%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+                    }
+                    else if (code == "ca") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>30%</td></tr><tr><td>Air Import Job</td> <td>24%</td></tr><tr><td>Sea Export Job</td> <td>20%</td></tr><tr><td>Sea Import Job</td> <td>5%</td></tr></tbody>');
+                    }
+                    else if (code == "ru") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>20%</td></tr><tr><td>Air Import Job</td> <td>21%</td></tr><tr><td>Sea Export Job</td> <td>12%</td></tr><tr><td>Sea Import Job</td> <td>13%</td></tr></tbody>');
+                    }
+                    else if (code == "ua") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>15%</td></tr><tr><td>Air Import Job</td> <td>12%</td></tr><tr><td>Sea Export Job</td> <td>16%</td></tr><tr><td>Sea Import Job</td> <td>22%</td></tr></tbody>');
+                    } else if (code == "iq") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>19%</td></tr><tr><td>Air Import Job</td> <td>13%</td></tr><tr><td>Sea Export Job</td> <td>19%</td></tr><tr><td>Sea Import Job</td> <td>18%</td></tr></tbody>');
+                    }
+                    else if (code == "tr") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>28%</td></tr><tr><td>Air Import Job</td> <td>15%</td></tr><tr><td>Sea Export Job</td> <td>22%</td></tr><tr><td>Sea Import Job</td> <td>9%</td></tr></tbody>');
+                    }
+                    else if (code == "sa") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>34%</td></tr><tr><td>Air Import Job</td> <td>27%</td></tr><tr><td>Sea Export Job</td> <td>10%</td></tr><tr><td>Sea Import Job</td> <td>13%</td></tr></tbody>');
+                    }
+                    else if (code == "ir") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>16%</td></tr><tr><td>Air Import Job</td> <td>28%</td></tr><tr><td>Sea Export Job</td> <td>29%</td></tr><tr><td>Sea Import Job</td> <td>10%</td></tr></tbody>');
+                    }
+                    else {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>30%</td></tr><tr><td>Air Import Job</td> <td>22%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+
+                    }
+                }
+            });
+
+            for (let idx = 1; idx <= parseInt(@counttab); idx++) {
+                $("#btnSearch" + idx).click(function (e) {
+                    console.log(e);
+                    $.ajax({
+                        type: "POST",
+                        // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                        url: "@Url.Action("ShowInformationBox")",
+                        data: { filter: $("#idFilter" + idx).val(), city: $("#idCity" + idx).val(), tabcode: $("#hidden" + idx).val() },
+                        dataType: "json",
+                        success: function (result) {
+                            $('#InformationBoxWithoutGraph' + idx).html(result.viewNonGraph);
+                            $('#InformationBoxWithGraph' + idx).html(result.viewGraph);
+                        },
+                        error: function (response) {
+                            console.log(response.responseText);
+                        }
+                    });
+                });
+            }
+        });
+
+
+        $(function () {
+            $("#idHeaderDashBoard").change(function () {
+                $.ajax({
+                    type: "POST",
+                    //url: "DashboardModel/ShowSubHeader?dashboardname=" + $(this).val(),  //remember change the controller to your owns.
+                    url: "@Url.Action("ShowSubHeader")",
+                    data: { dashboardname: $(this).val() },
+                    dataType: "json",
+                    success: function (response) {
+
+                        $('#idSubHeaderDashBoard').empty();
+                        $('#idSubHeaderDashBoard').append(response.view1);
+                        //$('#DynamicTable').html(response.view2);
+
+
+                    },
+                    complete: function () {
+                        $.ajax({
+                            type: "POST",
+                            // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                            url: "@Url.Action("ShowInformationBox")",
+                            data: { dashboardname: $("#idHeaderDashBoard").val(), code: "", customer: $("#idCustomer").val(), city: $("#idCity").val() },
+                            dataType: "json",
+                            success: function (result) {
+                                $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+                                $('#InformationBoxWithGraph').html(result.viewGraph);
+                            },
+                            error: function (response) {
+                                console.log(response.responseText);
+                            }
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+            $("#idSubHeaderDashBoard").change(function () {
+                $.ajax({
+                    type: "POST",
+                    // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                    url: "@Url.Action("ShowInformationBox")",
+                    data: { dashboardname: $("#idHeaderDashBoard").val(), code: $(this).val(), customer: $("#idCustomer").val(), city: $("#idCity").val() },
+                    dataType: "json",
+                    success: function (result) {
+                        $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+                        $('#InformationBoxWithGraph').html(result.viewGraph);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+            //$("#btnSearch").click(function (e) {
+            //    $.ajax({
+            //        type: "POST",
+            //        // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+            //        url: "@Url.Action("ShowInformationBox")",
+            //        data: { dashboardname: $("#idHeaderDashBoard").val(), code: $("#idSubHeaderDashBoard").val(), customer: $("#idCustomer").val(), city: $("#idCity").val() },
+            //        dataType: "json",
+            //        success: function (result) {
+            //            $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+            //            $('#InformationBoxWithGraph').html(result.viewGraph);
+            //        },
+            //        error: function (response) {
+            //            console.log(response.responseText);
+            //        }
+            //    });
+            //});
+
+        });
+    </script>
+}
+
+    <div id="tabs-container"></div>
+
+@foreach (var itemuser in tabuser)
+{
+    <input type="hidden" id="hidden@(totaltab)" value="@itemuser.TabCode">
+    <div class="tabcontent" id="@itemuser.TabDescription">
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="row" style="display: inline;">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="row x_title">
+                        <h1>@itemuser.TabDescription</h1>
+                        <div class="col-md-12">
+                            @*  <select class="form-control-sm" id="idHeaderDashBoard" onchange="">
+                        <option selected="selected" value="">Select Header</option>
+                        @foreach (var header in resultDashboardName)
+                        {
+                        <option value="@header.Key">@header.Key</option>
+
+                        }
+                        </select>
+                        <select class="form-control-sm" id="idSubHeaderDashBoard" asp-items="ViewBag.Code">
+                        <partial name="_SubHeaderPartial" model="Model" />
+                        </select>
+                        *@
+                            @if (!string.IsNullOrEmpty(itemuser.SourceFilter))
+                            {
+                                <select class="form-control-sm" id="idFilter@(totaltab)">
+                                    <option selected="selected" value="ALL">SHOW ALL</option>
+
+                                    @foreach (var item in itemuser.DataFilter)
+                                    {
+                                        int i = 0;
+                                        string code = string.Empty;
+                                        string name = string.Empty;
+                                        foreach (var key in item.Values)
+                                        {
+                                            if (i == 0)
+                                            {
+                                                code = key;
+                                            }
+                                            else if (i == 1)
+                                            {
+                                                name = key;
+                                            }
+                                            i++;
+                                        }
+                                        <option value="@code">@name</option>
+
+                                    }
+
+                                </select>
+
+                            }
+                            @if (totaltab > 1)
+                            {
+                                <select class="form-control-sm" id="idCity@(totaltab)">
+                                    <option selected="selected" value="ALL">Select City</option>
+                                    @foreach (var item in City)
+                                    {
+                                        <option value="@item["CityCode"]">@item["CityName"]</option>
+
+                                    }
+
+                                </select>
+                                <button class="btn btn-success pull-right" id="btnSearch@(totaltab)"><i class="fa fa-search"></i> Search</button>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="tile_count" id="InformationBoxWithoutGraph@(totaltab)">
+                        <partial name="_InformationBoxPartial" model="Model.Where(x=>x.TabCode == @itemuser.TabCode)" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-sm-12 ">
+
+                    <div class="tile_count" id="InformationBoxWithGraph@(totaltab)">
+                        <partial name="_InformationBoxPartialWithGraph" model="Model.Where(x=>x.TabCode == @itemuser.TabCode)" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+
+            <div id="DynamicTable">
+                <partial name="_TablePartial" model="Model.Where(x=>x.TabCode == @itemuser.TabCode)" />
+            </div>
+
+            @if (itemuser.TabCode == 1)
+            {
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="row">
+
+
+                            <div class="col-md-12 col-sm-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Total Job <small>geo-presentation</small></h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li>
+                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="dashboard-widget-content">
+                                            <div class="col-md-4 hidden-small">
+                                                <div id="DynamicMapTable">
+                                                    <partial name="_TableMapPartial" model="Model.Where(x=>x.TabCode == @itemuser.TabCode)" />
+                                                </div>
+                                            </div>
+
+                                            <div id="worldmap" class="col-md-8 col-sm-12 " style="height:330px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+
+    </div>
+
+
+    totaltab++;
+}
+

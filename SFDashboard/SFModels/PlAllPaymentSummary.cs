@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace SFDashboard.SFModels
+{
+    [Keyless]
+    public partial class PlAllPaymentSummary
+    {
+        [Column("Apply To Invoice")]
+        [StringLength(20)]
+        public string? ApplyToInvoice { get; set; }
+        [Column("Bank Acc Code")]
+        [StringLength(15)]
+        public string? BankAccCode { get; set; }
+        [Column("Bank Code")]
+        [StringLength(10)]
+        public string? BankCode { get; set; }
+        [Column("Cheque Date")]
+        [StringLength(10)]
+        [Unicode(false)]
+        public string? ChequeDate { get; set; }
+        [Column("Cheque No")]
+        [StringLength(20)]
+        public string? ChequeNo { get; set; }
+        [Column("Curr Code")]
+        [StringLength(3)]
+        public string? CurrCode { get; set; }
+        [Column("Curr Rate", TypeName = "decimal(13, 6)")]
+        public decimal? CurrRate { get; set; }
+        [Column("Description 1")]
+        [StringLength(50)]
+        public string? Description1 { get; set; }
+        [Column("Description 2")]
+        [StringLength(50)]
+        public string? Description2 { get; set; }
+        [Column("Description 3")]
+        [StringLength(50)]
+        public string? Description3 { get; set; }
+        [Column("Description 4")]
+        [StringLength(50)]
+        public string? Description4 { get; set; }
+        [Column("Description 5")]
+        [StringLength(50)]
+        public string? Description5 { get; set; }
+        [Column("H Awb Or H Bl No")]
+        [StringLength(1)]
+        [Unicode(false)]
+        public string HAwbOrHBlNo { get; set; } = null!;
+        [Column("Payment Amt", TypeName = "decimal(13, 2)")]
+        public decimal? PaymentAmt { get; set; }
+        [Column("Payment Date")]
+        [StringLength(10)]
+        [Unicode(false)]
+        public string? PaymentDate { get; set; }
+        [Column("Payment Local Amt", TypeName = "decimal(13, 2)")]
+        public decimal? PaymentLocalAmt { get; set; }
+        [Column("Invoice No")]
+        [StringLength(20)]
+        public string? InvoiceNo { get; set; }
+        [Column("Job No")]
+        [StringLength(20)]
+        public string? JobNo { get; set; }
+        [Column("M Awb Or Obl No")]
+        [StringLength(1)]
+        [Unicode(false)]
+        public string MAwbOrOblNo { get; set; } = null!;
+        [Column("Pay Code")]
+        [StringLength(3)]
+        public string? PayCode { get; set; }
+        [Column("Post Date")]
+        [StringLength(10)]
+        [Unicode(false)]
+        public string? PostDate { get; set; }
+        [Column("Post Flag")]
+        [StringLength(1)]
+        public string? PostFlag { get; set; }
+        [Column("Post Mth")]
+        [StringLength(6)]
+        public string? PostMth { get; set; }
+        [Column("Print Count")]
+        public int? PrintCount { get; set; }
+        [Column("Purchase Order No")]
+        [StringLength(20)]
+        public string? PurchaseOrderNo { get; set; }
+        [Column("Ref No")]
+        [StringLength(10)]
+        public string? RefNo { get; set; }
+        [StringLength(255)]
+        public string? Remark { get; set; }
+        [Column("Site Code")]
+        [StringLength(20)]
+        public string? SiteCode { get; set; }
+        [Column("Vat Amt", TypeName = "decimal(13, 2)")]
+        public decimal? VatAmt { get; set; }
+        [Column("Vendor Code")]
+        [StringLength(10)]
+        public string VendorCode { get; set; } = null!;
+        [Column("Vendor Name")]
+        [StringLength(80)]
+        public string? VendorName { get; set; }
+        [Column("Voucher No")]
+        [StringLength(20)]
+        public string? VoucherNo { get; set; }
+        [Column("Voucher Type")]
+        [StringLength(2)]
+        public string? VoucherType { get; set; }
+        [Column("Created By")]
+        [StringLength(50)]
+        public string CreatedBy { get; set; } = null!;
+        [Column("Created At")]
+        [StringLength(19)]
+        [Unicode(false)]
+        public string? CreatedAt { get; set; }
+        [Column("Updated By")]
+        [StringLength(50)]
+        public string UpdatedBy { get; set; } = null!;
+        [Column("Updated At")]
+        [StringLength(19)]
+        [Unicode(false)]
+        public string? UpdatedAt { get; set; }
+        [StringLength(3)]
+        public string Status { get; set; } = null!;
+        [StringLength(2)]
+        [Unicode(false)]
+        public string Location { get; set; } = null!;
+    }
+}

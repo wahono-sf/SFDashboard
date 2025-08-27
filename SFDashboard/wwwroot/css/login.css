@@ -1,0 +1,91 @@
+@import url("bootstrap.css");
+@import url("style.css");
+
+/*body {
+   background-image: url("../img/LoginBackgound.jpg");
+   background-size: cover;
+    /*background-repeat: repeat, repeat;*/
+}*/
+
+.login-title {
+    font-size: 18px;
+}
+
+#st {
+    color: #DC241F;
+}
+
+.login {
+    margin: 0 auto;
+    width: 600px;
+    /*padding: 50px 0;*/
+
+}
+
+.login-left {
+    float: left;
+    width: 400px;
+}
+
+    .login-left img {
+        width: 400px;
+    }
+
+.login-right {
+    float: right;
+    width: 550px;
+    margin-top: 78px;
+}
+
+.login-center {
+    /*background-color:lawngreen;*/
+    /*display:inline-block;*/
+    margin-top:25px;
+    text-align:center;
+}
+
+.form-horizontal  {
+    text-align: center;
+
+}
+
+.form-horizontal .control-label {
+    text-align: left;
+
+}
+
+.inner-addon {
+  position: relative;
+  /* margin just for breathe from viewport */
+  /*margin-top: 20px;*/
+}
+
+input {
+  /* give text some indent so it doesn't collapse with icon */
+  text-indent: 18px;
+}
+.glyphicon.glyphicon-home {
+    position: absolute;
+    /* Adjust coordinates as desired */
+    top: 10px;
+    left: 20px;
+} 
+
+.glyphicon.glyphicon-user {
+  position: absolute;
+  /* Adjust coordinates as desired */
+  top: 10px;
+  left: 20px;
+} 
+
+.glyphicon.glyphicon-lock {
+  position: absolute;
+  /* Adjust coordinates as desired */
+  top: 10px;
+  left: 20px;
+} 
+
+.help-block {
+    display: none;
+    margin-bottom: 0;
+}

@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace SFDashboard.SFModels
+{
+    [Table("wrPersonRole")]
+    [Index("RoleId", Name = "wrPersonRole_x", IsUnique = true)]
+    public partial class WrPersonRole
+    {
+        [Key]
+        public int RoleId { get; set; }
+        [StringLength(30)]
+        public string? RoleName { get; set; }
+        [StringLength(3)]
+        public string StatusCode { get; set; } = null!;
+        [StringLength(50)]
+        public string CreateBy { get; set; } = null!;
+        [Column(TypeName = "datetime")]
+        public DateTime CreateDateTime { get; set; }
+        [StringLength(50)]
+        public string UpdateBy { get; set; } = null!;
+        [Column(TypeName = "datetime")]
+        public DateTime UpdateDateTime { get; set; }
+    }
+}

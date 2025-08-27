@@ -1,0 +1,161 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = ViewBag.Title + " List";
+
+}
+<style>
+    .data-grid {
+        min-height: 700px;
+        max-width: 1500px;
+    }
+
+        .data-grid .dx-datagrid-header-panel {
+            padding: 0;
+            background-image: linear-gradient(to right, purple, red);
+        }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar {
+                margin: 0;
+                padding-right: 20px;
+                background-color: transparent;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-items-container {
+                height: 70px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:not(:first-child) {
+                background-image: linear-gradient(to right, purple, red);
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:last-child {
+                padding-right: 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-selectbox {
+                margin: auto 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-button {
+                margin: auto 0;
+            }
+
+    .gridDeleteSelected {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        margin: 1px;
+        top: 0;
+    }
+
+        .gridDeleteSelected .dx-button-text {
+            line-height: 0;
+        }
+
+</style>
+<div class="right_col" role="main">
+    <div class="row" style="display: block;">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="row x_title">
+                <div class="col-md-12">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+            <div class="x_content">
+                <div id="btnNew"></div>
+                <div id="btnDelete"></div>
+                <div id="btnRefresh"></div>
+                <div class="data-grid">
+                    <div class="gridDeleteSelected"></div>
+                    <div id="gridListPage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(() => {
+            const url = window.location.href.split("?");
+            const controller = url[0];
+            const menuid = url[1];
+            const dataGrid = $('#gridListPage').dxDataGrid({
+                dataSource: DevExpress.data.AspNet.createStore({
+                    key: "@ViewBag.KeyId",
+                    loadUrl: `${controller}/GetListPage?${menuid}`,
+                    //insertUrl: `${url}/InsertMenu`,
+                    //updateUrl: `${url}/UpdateMenu`,
+                    //deleteUrl: `${url}/DeleteMenu`,
+                    onBeforeSend: function (method, ajaxOptions) {
+                        ajaxOptions.xhrFields = { withCredentials: true };
+                    }
+                }),
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                showBorders: true,
+                //editing: {
+                //    mode: 'cell',
+                //    allowUpdating: true,
+                //    allowAdding: true,
+                //    allowDeleting: true,
+                //    useIcons: true,
+                //},
+                paging: {
+                    enabled: true,
+                },
+                selection: {
+                    mode: 'multiple',
+                },
+                filterRow: { visible: true },
+                hoverStateEnabled: true,
+                focusedRowEnabled: true,
+                onRowDblClick: function (e) {
+                    window.location.href = "@ViewBag.List.MenuUrlEntry&mod=edit&Id=" + e.key;
+                },
+                onSelectionChanged(data) {
+                    if (!data.selectedRowsData.length)
+                    {
+                        $('#btnDelete').dxButton({
+                            disabled: true,
+                        });
+                    }
+                    else{
+                        $('#btnDelete').dxButton({
+                            disabled: false,
+                        });
+                    }
+                },
+            }).dxDataGrid('instance');
+            $('#btnNew').dxButton({
+                text: 'New',
+                type: 'warning',
+                icon: "plus",
+                onClick() {
+                    window.location.href = "@ViewBag.List.MenuUrlEntry&mod=new";
+                },
+            });
+            $('#btnDelete').dxButton({
+                text: 'Delete',
+                type: 'warning',
+                icon: "trash",
+                disabled: true,
+                onClick() {
+
+                    dataGrid.refresh();
+                }
+                ,
+            });
+            $('#btnRefresh').dxButton({
+                text: 'Refresh',
+                type: 'warning',
+                icon: "refresh",
+                onClick() {
+                    dataGrid.refresh();
+                },
+            });
+        });
+
+    });
+</script>

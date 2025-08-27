@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace SFDashboard.SFModels
+{
+    [Table("amqo2")]
+    public partial class Amqo2
+    {
+        [Key]
+        [StringLength(10)]
+        public string QuoteTableNo { get; set; } = null!;
+        [Key]
+        public short LineItemNo { get; set; }
+        [StringLength(3)]
+        public string? AwbChargeCode { get; set; }
+        [StringLength(1)]
+        public string? AwbFlag { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType01 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType02 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType03 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType04 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType05 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType06 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType07 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType08 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType09 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType10 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType11 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType12 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType13 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType14 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType15 { get; set; }
+        [StringLength(1)]
+        public string? BreakRateType16 { get; set; }
+        [StringLength(50)]
+        public string? ChargeDescription { get; set; }
+        [StringLength(1)]
+        public string? ChargeType { get; set; }
+        [StringLength(1)]
+        public string? ChargeUnit { get; set; }
+        [StringLength(1)]
+        public string? DefaultChargeFlag { get; set; }
+        [StringLength(1)]
+        public string? DueParty { get; set; }
+        [StringLength(1)]
+        public string? PpCcFlag { get; set; }
+        [Column(TypeName = "decimal(13, 2)")]
+        public decimal? QuoteAmt { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate01 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate02 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate03 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate04 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate05 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate06 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate07 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate08 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate09 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate10 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate11 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate12 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate13 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate14 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate15 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? QuoteRate16 { get; set; }
+        [StringLength(1)]
+        public string? RateType { get; set; }
+        [StringLength(255)]
+        public string? Remark { get; set; }
+        [StringLength(30)]
+        public string? SalesItemCode { get; set; }
+        [StringLength(50)]
+        public string? UomCode { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak01 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak02 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak03 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak04 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak05 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak06 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak07 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak08 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak09 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak10 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak11 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak12 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak13 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak14 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak15 { get; set; }
+        [Column(TypeName = "decimal(13, 4)")]
+        public decimal? WeightBreak16 { get; set; }
+        [StringLength(1)]
+        public string? WeightType { get; set; }
+    }
+}

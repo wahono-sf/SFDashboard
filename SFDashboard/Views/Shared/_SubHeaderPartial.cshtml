@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SFDashboard.Models.DashBoardDetails>
+@{
+    var resultCode = Model.GroupBy(x => x.Code).Select(g => new { Code = g.Key }).ToList();
+}
+
+<option selected="selected" value="">Select SubHeader</option>
+@if (ViewBag.Code != null)
+{
+    @foreach (var item in resultCode)
+    {
+        <option value="@item.Code">@item.Code</option>
+
+    }
+}

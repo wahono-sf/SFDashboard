@@ -1,0 +1,616 @@
+﻿@model IEnumerable<SFDashboard.Models.DashBoardDetails>
+@using System.Data;
+@using Newtonsoft.Json
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Administrator";
+    var resultDashboardName = Model.Where(e => e.ArchiveFlag == "1" && !e.Type.StartsWith("Table")).GroupBy(x => x.DashBoardName).ToList();
+    var City = ViewBag.City;
+    var BusinessParty = ViewBag.BusinessParty;
+    var timer = Html.Raw(JsonConvert.SerializeObject(ViewBag.Timer));
+}
+<style>
+    .data-grid {
+        min-height: 700px;
+        /*max-width: 1500px;*/
+        max-width: 100%;
+    }
+
+        .data-grid .dx-datagrid-header-panel {
+            padding: 0;
+            background-image: linear-gradient(to right, purple, red);
+        }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar {
+                margin: 0;
+                padding-right: 20px;
+                background-color: transparent;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-items-container {
+                height: 70px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:not(:first-child) {
+                background-image: linear-gradient(to right, purple, red);
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-toolbar-before .dx-toolbar-item:last-child {
+                padding-right: 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-selectbox {
+                margin: auto 10px;
+            }
+
+            .data-grid .dx-datagrid-header-panel .dx-button {
+                margin: auto 0;
+            }
+
+    .gridDeleteSelected {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        margin: 1px;
+        top: 0;
+    }
+
+        .gridDeleteSelected .dx-button-text {
+            line-height: 0;
+        }
+
+    .listview {
+        border: 1px silver solid;
+    }
+
+    .button-group {
+        text-align: center;
+        -ms-column-width: auto;
+    }
+
+    .configsetting-group {
+        padding: 12px 12px;
+    }
+
+</style>
+
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            var i, tabcontent;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                if (i > 0) {
+                    tabcontent[i].style.display = "none";
+                }
+                else {
+                    tabcontent[i].style.display = "block";
+                }
+
+            }
+
+
+
+            $('.Table-Dynamic').DataTable();
+
+            function reload() {
+                document.location.reload();
+            }
+
+            var timers = parseInt(@timer) * 1000;
+            setTimeout(reload, (timers));
+
+        });
+
+
+        jQuery(document).ready(function () {
+            jQuery('#worldmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#666666',
+                enableZoom: true,
+                showTooltip: true,
+                values: sample_data,
+                scaleColors: ['#E6F2F0', '#149B7E'],
+                normalizeFunction: 'polynomial',
+                onRegionClick: function (element, code, region) {
+                    //var message = 'You clicked "'
+                    //    + region
+                    //    + '" which has the code: '
+                    //    + code.toUpperCase();
+
+                    //alert(message);
+                    $('#country_name').html(region);
+                    //  console.log(code);
+                    //$('#tbl_country_map').html(response.view2);
+                    if (code == "id") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>20%</td></tr><tr><td>Air Import Job</td> <td>12%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+                    }
+                    else if (code == "cn") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>10%</td></tr><tr><td>Air Import Job</td> <td>22%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+                    }
+                    else if (code == "ca") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>30%</td></tr><tr><td>Air Import Job</td> <td>24%</td></tr><tr><td>Sea Export Job</td> <td>20%</td></tr><tr><td>Sea Import Job</td> <td>5%</td></tr></tbody>');
+                    }
+                    else if (code == "ru") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>20%</td></tr><tr><td>Air Import Job</td> <td>21%</td></tr><tr><td>Sea Export Job</td> <td>12%</td></tr><tr><td>Sea Import Job</td> <td>13%</td></tr></tbody>');
+                    }
+                    else if (code == "ua") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>15%</td></tr><tr><td>Air Import Job</td> <td>12%</td></tr><tr><td>Sea Export Job</td> <td>16%</td></tr><tr><td>Sea Import Job</td> <td>22%</td></tr></tbody>');
+                    } else if (code == "iq") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>19%</td></tr><tr><td>Air Import Job</td> <td>13%</td></tr><tr><td>Sea Export Job</td> <td>19%</td></tr><tr><td>Sea Import Job</td> <td>18%</td></tr></tbody>');
+                    }
+                    else if (code == "tr") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>28%</td></tr><tr><td>Air Import Job</td> <td>15%</td></tr><tr><td>Sea Export Job</td> <td>22%</td></tr><tr><td>Sea Import Job</td> <td>9%</td></tr></tbody>');
+                    }
+                    else if (code == "sa") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>34%</td></tr><tr><td>Air Import Job</td> <td>27%</td></tr><tr><td>Sea Export Job</td> <td>10%</td></tr><tr><td>Sea Import Job</td> <td>13%</td></tr></tbody>');
+                    }
+                    else if (code == "ir") {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>16%</td></tr><tr><td>Air Import Job</td> <td>28%</td></tr><tr><td>Sea Export Job</td> <td>29%</td></tr><tr><td>Sea Import Job</td> <td>10%</td></tr></tbody>');
+                    }
+                    else {
+                        $('#tbl_country_map').html('<tbody><tr><td>Air Export Job</td> <td>30%</td></tr><tr><td>Air Import Job</td> <td>22%</td></tr><tr><td>Sea Export Job</td> <td>30%</td></tr><tr><td>Sea Import Job</td> <td>15%</td></tr></tbody>');
+
+                    }
+                }
+            });
+        });
+        $(function () {
+            $("#idHeaderDashBoard").change(function () {
+                $.ajax({
+                    type: "POST",
+                    //url: "DashboardModel/ShowSubHeader?dashboardname=" + $(this).val(),  //remember change the controller to your owns.
+                    url: "@Url.Action("ShowSubHeader")",
+                    data: { dashboardname: $(this).val() },
+                    dataType: "json",
+                    success: function (response) {
+
+                        $('#idSubHeaderDashBoard').empty();
+                        $('#idSubHeaderDashBoard').append(response.view1);
+                        //$('#DynamicTable').html(response.view2);
+
+
+                    },
+                    complete: function () {
+                        $.ajax({
+                            type: "POST",
+                            // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                            url: "@Url.Action("ShowInformationBox")",
+                            data: { dashboardname: $("#idHeaderDashBoard").val(), code: "", customer: $("#idCustomer").val(), city: $("#idCity").val() },
+                            dataType: "json",
+                            success: function (result) {
+                                $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+                                $('#InformationBoxWithGraph').html(result.viewGraph);
+                            },
+                            error: function (response) {
+                                console.log(response.responseText);
+                            }
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+            $("#idSubHeaderDashBoard").change(function () {
+                $.ajax({
+                    type: "POST",
+                    // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                    url: "@Url.Action("ShowInformationBox")",
+                    data: { dashboardname: $("#idHeaderDashBoard").val(), code: $(this).val(), customer: $("#idCustomer").val(), city: $("#idCity").val() },
+                    dataType: "json",
+                    success: function (result) {
+                        $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+                        $('#InformationBoxWithGraph').html(result.viewGraph);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+            $("#btnSearch").click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    // url: "DashboardModel/ShowInformationBox?dashboardname=" + $("#idHeaderDashBoard").val() + "&code=" + $(this).val(),  //remember change the controller to your owns.
+                    url: "@Url.Action("ShowInformationBox")",
+                    data: { dashboardname: $("#idHeaderDashBoard").val(), code: $("#idSubHeaderDashBoard").val(), customer: $("#idCustomer").val(), city: $("#idCity").val() },
+                    dataType: "json",
+                    success: function (result) {
+                        $('#InformationBoxWithoutGraph').html(result.viewNonGraph);
+                        $('#InformationBoxWithGraph').html(result.viewGraph);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+        });
+
+   
+    </script>
+}
+
+    <div id="tabs-container"></div>
+
+    <div class="right_col" role="main">
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="row x_title">
+                    <div class="col-md-12">
+                        <h2>Administrator</h2>
+                    </div>
+                </div>
+                <div class="x_content">
+
+                    @*   <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="useraccess-tab" data-toggle="tab" href="#useraccess" role="tab" aria-controls="useraccess" aria-selected="false">User Access</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="dashboarddetails-tab" data-toggle="tab" href="#dashboarddetails" role="tab" aria-controls="dashboarddetails" aria-selected="false">Details</a>
+                </li>
+                </ul>*@
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tabcontent" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <div class="right_col" role="main">
+                                <!-- top tiles -->
+                                <div class="row" style="display: inline;">
+                                    <div class="col-md-12 col-sm-12 ">
+                                        <div class="row x_title">
+                                            <div class="col-md-12">
+                                                @*     <select class="form-control-sm" id="idHeaderDashBoard" onchange="">
+                                            <option selected="selected" value="">Select Header</option>
+                                            @foreach (var header in resultDashboardName)
+                                            {
+                                            <option value="@header.Key">@header.Key</option>
+
+                                            }
+                                            </select>
+                                            <select class="form-control-sm" id="idSubHeaderDashBoard" asp-items="ViewBag.Code">
+                                            <partial name="_SubHeaderPartial" model="Model" />
+                                            </select>
+                                            <select class="form-control-sm" id="idCustomer" asp-items="ViewBag.Code" style="width:250px">
+                                            <option selected="selected" value="ALL">Select Customer</option>
+                                            @foreach (var item in BusinessParty)
+                                            {
+                                            <option value="@item["BusinessPartyCode"]">@item["BusinessPartyName"]</option>
+
+                                            }
+                                            </select>
+
+                                            <select class="form-control-sm" id="idCity">
+                                            <option selected="selected" value="ALL">Select City</option>
+                                            @foreach (var item in City)
+                                            {
+                                            <option value="@item["CityCode"]">@item["CityName"]</option>
+
+                                            }
+
+                                            </select>
+                                            <button class="btn btn-success pull-right" id="btnSearch"><i class="fa fa-search"></i> Search</button>*@
+                                                @* <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                            <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                            </div>*@
+                                            </div>
+                                        </div>
+                                        <div class="tile_count" id="InformationBoxWithoutGraph">
+                                            <partial name="_InformationBoxPartialAdministrator" model="Model" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 col-sm-12 ">
+
+                                        <div class="tile_count" id="InformationBoxWithGraph">
+                                            <partial name="_InformationBoxPartialWithGraphAdministrator" model="Model" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="clearfix"></div>
+
+                                <div id="DynamicTable">
+                                    <partial name="_TablePartialAdministrator" model="Model" />
+                                </div>
+
+
+                                <div class="row">
+
+
+                                    <div class="col-md-12 col-sm-12 ">
+                                        <div class="row">
+
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h2>Total Job <small>geo-presentation</small></h2>
+                                                        <ul class="nav navbar-right panel_toolbox">
+                                                            <li>
+                                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                            </li>
+                                                            <li class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <a class="close-link"><i class="fa fa-close"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
+                                                        <div class="dashboard-widget-content">
+                                                            <div class="col-md-4 hidden-small">
+                                                                <div id="DynamicMapTable">
+                                                                    <partial name="_TableMapPartialAdministrator" model="Model" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="worldmap" class="col-md-8 col-sm-12 " style="height:330px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tabcontent" id="useraccess" role="tabpanel" aria-labelledby="useraccess-tab">
+                            <div class="data-grid">
+                               @* <div class="gridDeleteSelected"></div>*@
+                                <div id="gridUserAccessID"></div>
+                            </div>
+
+                        </div>
+                        <div class="tabcontent" id="tabdetail" role="tabpanel" aria-labelledby="tabdetail-tab">
+                            <div class="data-grid">                          
+                                <div id="gridTabDetail"></div>
+                            </div>
+
+                        </div>
+                        <div class="tabcontent" id="dashboarddetails" role="tabpanel" aria-labelledby="dashboarddetails-tab">
+                            <div class="data-grid">
+                              @*  <div class="gridDeleteSelected"></div>*@
+                                <div id="gridDashboardDetails"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $(() => {
+                const url = window.location.href;
+
+                const dataUserAccessID = $('#gridUserAccessID').dxDataGrid({
+                    dataSource: DevExpress.data.AspNet.createStore({
+                        key: "UserId",
+                        loadUrl: `${url}/GetUserAccessID`,
+                        insertUrl: `${url}/InsertUserAccessID`,
+                        updateUrl: `${url}/UpdateUserAccessID`,
+                        deleteUrl: `${url}/DeleteUserAccessID`,
+                        onBeforeSend: function (method, ajaxOptions) {
+                            ajaxOptions.xhrFields = { withCredentials: true };
+                        }
+                    }),
+                    rowAlternationEnabled: true,
+                    remoteOperations: true,
+                    //allowColumnReordering: true,
+                    //allowColumnResizing: true,
+                    columnAutoWidth: true,
+                    showBorders: true,
+                    editing: {
+                        mode: 'popup',
+                        allowUpdating: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        useIcons: true,
+                        popup: {
+                            title: "User Access ID",
+                            showTitle: true,
+                        },
+                    },
+                    scrolling: {
+                        columnRenderingMode: 'virtual',
+                    },
+                    pager: {
+                        visible: true,
+                        allowedPageSizes: [5, 10, 25, 50, 'all'],
+                        showPageSizeSelector: true,
+                        showInfo: true,
+                        showNavigationButtons: true,
+                    },
+                    paging: {
+                        enabled: true,
+                        pageSize: 25,
+                    },
+                    filterRow: { visible: true },
+                    onContentReady: function (e) {
+                        e.component.columnOption("command:edit", "visibleIndex", -1);
+                    },
+                    onSelectionChanged(data) {
+                        dataUserAccessID.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                    },
+                }).dxDataGrid('instance');
+
+                const dataTabDetails = $('#gridTabDetail').dxDataGrid({
+                    dataSource: DevExpress.data.AspNet.createStore({
+                        key: ["DashBoardName", "Code", "code2", "CustomerCode","UserId","TabCode"],                     
+                        loadUrl: `${url}/GetTabDetails`,
+                        insertUrl: `${url}/InsertTabDetails`,
+                        updateUrl: `${url}/UpdateTabDetails`,
+                        deleteUrl: `${url}/DeleteTabDetails`,
+                        onBeforeSend: function (method, ajaxOptions) {
+                            ajaxOptions.xhrFields = { withCredentials: true };
+                        }
+                    }),
+                    rowAlternationEnabled: true,
+                    remoteOperations: true,
+                    //allowColumnReordering: true,
+                    //allowColumnResizing: true,
+                    columnAutoWidth: true,
+                    showBorders: true,
+                    editing: {
+                        mode: 'popup',
+                        allowUpdating: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        useIcons: true,
+                        popup: {
+                            title: "Tab Details",
+                            showTitle: true,
+                        },
+                    },
+                    scrolling: {
+                        columnRenderingMode: 'virtual',
+                    },
+                    pager: {
+                        visible: true,
+                        allowedPageSizes: [5, 10, 25, 50, 'all'],
+                        showPageSizeSelector: true,
+                        showInfo: true,
+                        showNavigationButtons: true,
+                    },
+                    paging: {
+                        enabled: true,
+                        pageSize: 25,
+                    },
+                    filterRow: { visible: true },
+                    onContentReady: function (e) {
+                        e.component.columnOption("command:edit", "visibleIndex", -1);
+                        e.component.columnOption("Dbdashboard", "formItem.visible", false);
+                        $("#gridTabDetail").dxDataGrid("columnOption", "Dbdashboard", "visible", false);
+                    },
+                    onSelectionChanged(data) {
+                        dataTabDetails.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                    },
+                }).dxDataGrid('instance');
+
+                const dataGridDashboardDetails = $('#gridDashboardDetails').dxDataGrid({
+                    dataSource: DevExpress.data.AspNet.createStore({
+                        key: ["DashBoardName", "Code", "code2", "CustomerCode"],
+                        loadUrl: `${url}/GetDashboardDetails`,
+                        insertUrl: `${url}/InsertDashboardDetails`,
+                        updateUrl: `${url}/UpdateDashboardDetails`,
+                        deleteUrl: `${url}/DeleteDashboardDetails`,
+                        onBeforeSend: function (method, ajaxOptions) {
+                            ajaxOptions.xhrFields = { withCredentials: true };
+                        }
+                    }),
+                    rowAlternationEnabled: true,
+                    remoteOperations: true,
+                    //allowColumnReordering: true,
+                    //allowColumnResizing: true,
+                    columnAutoWidth: true,
+                    showBorders: true,
+                    editing: {
+                        mode: 'popup',
+                        allowUpdating: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        useIcons: true,
+                        popup: {
+                            title: "Dashboard Details",
+                            showTitle: true,
+                        },
+                    },
+                    scrolling: {
+                        columnRenderingMode: 'virtual',
+                    },
+                    pager: {
+                        visible: true,
+                        allowedPageSizes: [5, 10, 25, 50, 'all'],
+                        showPageSizeSelector: true,
+                        showInfo: true,
+                        showNavigationButtons: true,
+                    },
+                    paging: {
+                        enabled: true,
+                        pageSize: 25,
+                    },
+                    filterRow: { visible: true },
+                    onContentReady: function (e) {
+                        e.component.columnOption("command:edit", "visibleIndex", -1);
+                        e.component.columnOption("Column Name", "visible", false);
+                        e.component.columnOption("Row Field", "visible", false);
+                        e.component.columnOption("List Graph Boxs", "visible", false);
+                        e.component.columnOption("List User Menu", "visible", false);
+                        e.component.columnOption("List Information Box", "visible", false);
+                        e.component.columnOption("Column Name", "formItem.visible", false);
+                        e.component.columnOption("Row Field", "formItem.visible", false);
+                        e.component.columnOption("List Graph Boxs", "formItem.visible", false);
+                        e.component.columnOption("List User Menu", "formItem.visible", false);
+                        e.component.columnOption("List Information Box", "formItem.visible", false);
+                    },
+                    //onEditorPreparing: function (e) {
+                    //    if (e.parentType === 'dataRow') {
+
+                    //        if (e.dataField === 'ColumnName' || e.dataField === 'RowField' || e.dataField === 'ListInformationBox' || e.dataField === 'ListGraphBoxs' || e.dataField === 'ListUserMenu') {
+                    //           console.log(e);
+                    //            e.dataField = "";
+                    //            e.editorOptions.visible=false;
+                    //        }
+                    //    }
+                    //},
+                    onSelectionChanged(data) {
+                        dataGridDashboardDetails.option('toolbar.items[1].options.disabled', !data.selectedRowsData.length);
+                    },
+                }).dxDataGrid('instance');
+               
+                
+                var tabs = [
+                    { text: "Dashboard", id: "dashboard" },
+                    { text: "User Access", id: "useraccess" },
+                    { text: "Tab Detail", id: "tabdetail" },
+                    { text: "Dashboard Details", id: "dashboarddetails", }
+                ];
+
+                $('#tabs-container').dxTabs({
+                    dataSource: tabs,
+                    scrollByContent: true,
+                    showNavButtons: true,
+                    selectedIndex: 0,
+                    onItemClick(e) {
+                        console.log(e.itemData.text);
+                        //selectBox.option('value', e.itemData.id);
+                        var i, tabcontent, tablinks;
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+                        }
+                        document.getElementById(e.itemData.id).style.display = "block";
+                        dataUserAccessID.refresh();
+                        dataTabDetails.refresh();
+                        dataGridDashboardDetails.refresh();
+                    },
+                });
+            });
+
+        });
+    </script>

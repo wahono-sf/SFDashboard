@@ -1,0 +1,482 @@
+
+body {
+   background-image: url("../images/Background.jpg");
+   background-size: cover;
+    /*background-repeat: repeat, repeat;*/
+}
+
+html, body {
+    margin: 0; /* 必要，否则纵向滚动条不会消失 */
+    height: 100%; /* 必要，以便之后给container设置高度百分比 */
+}
+
+#container {
+    min-height: 100%; /* 此属性需要doctype的支持，见第一行。 否则不会生效。在IE中，写height：100%就可以工作，但其他浏览器需要设置min-height。*/
+    position: relative; /* 必要 */
+}
+
+#body {
+    padding-bottom: 90px; /* 等于footer的高度(加底部空白) */
+    height: auto;
+}
+
+#footer {
+    position: absolute; /* 必要 */
+    bottom: 0; /* 必要 */
+    left: 0;
+    right: 0;
+    height: 70px; /* 必要 */
+    border-top: 1px solid #ddd;
+    padding-top: 23px;
+}
+
+#footer2 {
+    /*position: absolute; /* 必要 */
+    bottom: 0; /* 必要 */
+    left: 0;
+    right: 0;
+    height: 70px; /* 必要 */
+    border-top: 1px solid #ddd;
+    padding-top: 23px;
+}
+
+#banner .part1 {
+    /*background: #FF9610;*/
+    background: #aaa1a1 ;
+    color: #fff;
+    font-size: 16px;
+    height: 50px;
+    vertical-align: middle;
+    line-height: 50px;
+    padding-left: 10px;
+    margin-right: -30px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#banner .part2 img {
+    height: 50px;
+    width: 100%;
+}
+
+#body .container {
+    padding-top: 20px;
+}
+
+a {
+    color: #169592;
+    -webkit-transition: color 0.25s linear;
+    -moz-transition: color 0.25s linear;
+    -o-transition: color 0.25s linear;
+    transition: color 0.25s linear;
+    cursor: pointer;
+}
+
+    a:hover {
+        color: #00d6d1;
+        text-decoration: none;
+    }
+
+    a:hover, a:focus {
+        color: #00d6d1;
+        text-decoration: none;
+    }
+
+.glyphicon, .fa {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn-success {
+    /*background-color: #009E96;*/
+    background-color: #C41F1F;
+}
+
+    .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
+        background-color: #31b0d5;
+    }
+
+.form-horizontal .control-label {
+    text-align: left;
+    padding-right: 0;
+}
+
+    .form-horizontal .control-label span {
+        float: right;
+    }
+
+@media (max-width: 768px) {
+    #banner .part1 {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    #banner .part2 {
+        display: none;
+    }
+
+    .form-horizontal .control-label span {
+        float: none;
+    }
+}
+
+.my-loading {
+    /*background: #eee url(../img/loading_100x100.gif) no-repeat fixed center;
+    opacity: 0.5;
+    filter: Alpha(Opacity=50);*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(255,255,255,.5);
+    background-image: url(../img/loading_100x100.gif);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.required {
+    color: #a94442;
+}
+
+.black {
+    color: #333 !important;
+}
+
+.green {
+    /*color: #009E96 !important;*/
+    color: #C41F1F  !important;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.dib {
+    display: inline-block !important;
+}
+
+.di {
+    display: inline !important;
+}
+
+.db {
+    display: block !important;
+}
+
+.tal {
+    text-align: left !important;
+}
+
+.tac {
+    text-align: center !important;
+}
+
+.tar {
+    text-align: right !important;
+}
+
+.vat {
+    vertical-align: top !important;
+}
+
+.vam {
+    vertical-align: middle !important;
+}
+
+.vab {
+    vertical-align: bottom !important;
+}
+
+.fwb {
+    font-weight: bold;
+}
+
+.h20 {
+    line-height: 20px !important;
+    height: 20px !important;
+}
+
+.h25 {
+    line-height: 25px !important;
+    height: 25px !important;
+}
+
+.h30 {
+    line-height: 30px !important;
+    height: 30px !important;
+}
+
+.h35 {
+    line-height: 35px !important;
+    height: 30px !important;
+}
+
+.h40 {
+    line-height: 40px !important;
+    height: 40px !important;
+}
+
+.wp50 {
+    width: 50% !important;
+}
+
+.w20 {
+    width: 20px !important;
+}
+
+.w50 {
+    width: 50px !important;
+}
+
+.w80 {
+    width: 80px !important;
+}
+
+.w90 {
+    width: 90px !important;
+}
+
+.w100 {
+    width: 100px !important;
+}
+
+.w110 {
+    width: 110px !important;
+}
+
+.w120 {
+    width: 120px !important;
+}
+
+.w130 {
+    width: 130px !important;
+}
+
+.w140 {
+    width: 140px !important;
+}
+
+.w150 {
+    width: 150px !important;
+}
+
+.w160 {
+    width: 160px !important;
+}
+
+.w170 {
+    width: 170px !important;
+}
+
+.w180 {
+    width: 180px !important;
+}
+
+.w190 {
+    width: 190px !important;
+}
+
+.w195 {
+    width: 195px !important;
+}
+
+.w200 {
+    width: 200px !important;
+}
+
+.w220 {
+    width: 220px !important;
+}
+
+.w230 {
+    width: 230px !important;
+}
+
+.w270 {
+    width: 270px !important;
+}
+
+.w275 {
+    width: 275px !important;
+}
+
+.w280 {
+    width: 280px !important;
+}
+
+.w290 {
+    width: 290px !important;
+}
+
+.w300 {
+    width: 300px !important;
+}
+
+.w308 {
+    width: 308px !important;
+}
+
+.w310 {
+    width: 310px !important;
+}
+
+.w320 {
+    width: 320px !important;
+}
+
+.w330 {
+    width: 330px !important;
+}
+
+.w350 {
+    width: 350px !important;
+}
+
+.w390 {
+    width: 390px !important;
+}
+
+.w400 {
+    width: 400px !important;
+}
+
+.w416 {
+    width: 416px !important;
+}
+
+.w420 {
+    width: 420px !important;
+}
+
+.w480 {
+    width: 480px !important;
+}
+
+.w500 {
+    width: 500px !important;
+}
+
+.w550 {
+    width: 550px !important;
+}
+
+.w555 {
+    width: 555px !important;
+}
+
+.ml5 {
+    margin-left: 5px !important;
+}
+
+.w700 {
+    width: 700px !important;
+}
+
+.w750 {
+    width: 750px !important;
+}
+
+.w600 {
+    width: 600px !important;
+}
+
+.w800 {
+    width: 800px !important;
+}
+
+
+.ml10 {
+    margin-left: 10px !important;
+}
+
+.ml50 {
+    margin-left: 50px !important;
+}
+
+.ml85 {
+    margin-left: 85px !important;
+}
+
+.ml100 {
+    margin-left: 100px !important;
+}
+
+.ml125 {
+    margin-left: 125px !important;
+}
+
+.ml145 {
+    margin-left: 145px !important;
+}
+
+.ml195 {
+    margin-left: 195px !important;
+}
+
+.mt0 {
+    margin-top: 0 !important;
+}
+
+.mt5 {
+    margin-top: 5px !important;
+}
+
+.mt10 {
+    margin-top: 10px !important;
+}
+
+.mt15 {
+    margin-top: 15px !important;
+}
+
+.mt30 {
+    margin-top: 30px !important;
+}
+
+.mt50 {
+    margin-top: 50px !important;
+}
+
+.mb0 {
+    margin-bottom: 0 !important;
+}
+
+.mb2 {
+    margin-bottom: 2px !important;
+}
+
+.mb5 {
+    margin-bottom: 5px !important;
+}
+
+.mb8 {
+    margin-bottom: 8px !important;
+}
+
+.mb10 {
+    margin-bottom: 10px !important;
+}
+
+
+.pt5 {
+    padding-top: 5px !important;
+}
+
+.btn-calendar {
+    background-color: #C41F1F;
+    color: #fff;
+}
+
+.disabledbutton {
+    pointer-events: none !important;
+    opacity: 0.7; 
+}
