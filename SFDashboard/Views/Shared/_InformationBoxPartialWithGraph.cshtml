@@ -57,6 +57,7 @@
         init_flot_chart();
 
 
+
         function gd(year, month, day) {
             return new Date(year, month - 1, day).getTime();
         }
@@ -282,79 +283,141 @@
 
             let j = @firstcounter;
             for (let i = 1; i <= parseInt(cek); i++) {
-
-
                 if ($('#chart_plot_@(tabcode)0' + i).length) {
                     const dataGraph = [];
-                    var echartLine = echarts.init(document.getElementById('chart_plot_@(tabcode)0' + i), theme);
-                    graph[j - 1].m_graphlegend.forEach((object1, idx, array) => {
+                    const chartDom = document.getElementById('chart_plot_@(tabcode)0' + i);
+                    const echartLine = echarts.init(chartDom, theme);
+
+                    graph[j - 1].m_graphlegend.forEach((legend, idx) => {
                         dataGraph.push({
-                            name: object1,
+                            name: legend,
                             type: 'line',
                             smooth: true,
-                            itemStyle: {
-                                normal: {
-                                    areaStyle: {
-                                        type: 'default'
-                                    }
-                                }
-                            },
+                            itemStyle: { normal: { areaStyle: { type: 'default' } } },
                             data: graph[j - 1].m_graphvalue[idx]
-                        })
+                        });
                     });
-                    echartLine.setOption({
-                        title: {
-                            text: 'Line Graph',
-                            subtext: 'Subtitle'
-                        },
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            x: 220,
-                            y: 40,
-                            data: graph[j - 1].m_graphlegend
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {
-                                    show: true,
-                                    title: {
-                                        line: 'Line',
-                                        bar: 'Bar',
-                                        stack: 'Stack',
-                                        tiled: 'Tiled'
-                                    },
-                                    type: ['line', 'bar', 'stack', 'tiled']
-                                },
-                                restore: {
-                                    show: true,
-                                    title: "Restore"
-                                },
-                                saveAsImage: {
-                                    show: true,
-                                    title: "Save Image"
-                                }
-                            }
-                        },
+
+                    const baseOption = {
+                        title: { text: 'Line Graph', subtext: 'Subtitle' },
+                        tooltip: { trigger: 'axis' },
+                        legend: { x: 220, y: 40, data: graph[j - 1].m_graphlegend },
                         calculable: true,
-                        xAxis: [{
-                            type: 'category',
-                            boundaryGap: false,
-                            data: graph[j - 1].m_graphlabel
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
+                        xAxis: [{ type: 'category', boundaryGap: false, data: graph[j - 1].m_graphlabel }],
+                        yAxis: [{ type: 'value' }],
                         series: dataGraph
-                    });
+                    };
+
+                    function cloneBase() { return JSON.parse(JSON.stringify(baseOption)); }
+
+                    function setLine() {
+                        const opt = cloneBase();
+                        opt.series.forEach(s => {
+                            s.type = 'line';
+                            s.smooth = true;
+                            s.itemStyle = { normal: { areaStyle: { type: 'default' } } };
+                            delete s.stack;
+                        });
+                        opt.toolbox = toolbox; 
+                        echartLine.clear();
+                        echartLine.setOption(opt, true);
+                    }
+
+                    function setBar(stacked = false) {
+                        const opt = cloneBase();
+
+                        if (opt.xAxis && opt.xAxis.length > 0) {
+                            opt.xAxis[0].boundaryGap = true;
+                        }
+
+                        opt.series.forEach(s => {
+                            s.type = 'bar';
+                            delete s.smooth;
+                            delete s.itemStyle;
+                            if (stacked) {
+                                s.stack = 'total';
+                            } else {
+                                delete s.stack;
+                            }
+                        });
+
+                        opt.toolbox = toolbox;
+                        echartLine.clear();
+                        echartLine.setOption(opt, true);
+                    }
+
+
+                    function setPie() {
+                        echartLine.clear();
+                        echartLine.setOption({
+                            title: { text: 'Pie Chart', subtext: 'Categories', left: 'left' },
+                            tooltip: { trigger: 'item' },
+                            legend: { orient: 'vertical', left: 'left' },
+                            xAxis: [], yAxis: [], 
+                            series: [{
+                                name: 'Categories',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '60%'],
+                                data: [
+                                    { value: 335, name: 'Category A' },
+                                    { value: 310, name: 'Category B' },
+                                    { value: 234, name: 'Category C' },
+                                    { value: 135, name: 'Category D' }
+                                ]
+                            }],
+                            toolbox: toolbox 
+                        }, true);
+                    }
+
+                    const toolbox = {
+                        show: true,
+                        feature: {
+                            myLine: {
+                                show: true,
+                                title: 'Line',
+                                icon: 'path://M0,30 L10,20 L20,25 L30,10 L40,15 L50,5 L60,10',
+                                onclick: setLine
+                            },
+                            myBar: {
+                                show: true,
+                                title: 'Bar',
+                                icon: 'path://M5,30 H15 V10 H5 Z M25,30 H35 V5 H25 Z M45,30 H55 V20 H45 Z',
+                                onclick: function () { setBar(false); }
+                            },
+                            myStack: {
+                                show: true,
+                                title: 'Stack',
+                                icon: 'path://M5,30 H55 V25 H5 Z M5,22 H55 V17 H5 Z M5,14 H55 V9 H5 Z',
+                            },
+                            myTiled: {
+                                show: true,
+                                title: 'Tiled',
+                                icon: 'path://M5,30 H15 V20 H5 Z M20,30 H30 V20 H20 Z M35,30 H45 V20 H35 Z M50,30 H60 V20 H50 Z',
+                            },
+                            myPie: {
+                                show: true,
+                                title: 'Pie',
+                                icon: 'path://M12 2 A10 10 0 1 0 22 12 L12 12 Z',
+                                iconStyle: { color: 'saddlebrown', borderColor: 'saddlebrown' },
+                                onclick: setPie
+                            },
+                            restore: {
+                                show: true,
+                                title: 'Restore',
+                                onclick: setLine
+                            },
+                            saveAsImage: { show: true, title: 'Save Image' }
+                        }
+                    };
+
+                    const initOpt = cloneBase();
+                    initOpt.toolbox = toolbox;
+                    echartLine.setOption(initOpt, true);
                 }
+
                 j++;
-
-
             }
-
 
         }
 
