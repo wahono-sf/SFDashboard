@@ -318,7 +318,7 @@
                             s.itemStyle = { normal: { areaStyle: { type: 'default' } } };
                             delete s.stack;
                         });
-                        opt.toolbox = toolbox; 
+                        opt.toolbox = toolbox;
                         echartLine.clear();
                         echartLine.setOption(opt, true);
                     }
@@ -353,7 +353,7 @@
                             title: { text: 'Pie Chart', subtext: 'Categories', left: 'left' },
                             tooltip: { trigger: 'item' },
                             legend: { orient: 'vertical', left: 'left' },
-                            xAxis: [], yAxis: [], 
+                            xAxis: [], yAxis: [],
                             series: [{
                                 name: 'Categories',
                                 type: 'pie',
@@ -366,9 +366,111 @@
                                     { value: 135, name: 'Category D' }
                                 ]
                             }],
-                            toolbox: toolbox 
+                            toolbox: toolbox
                         }, true);
                     }
+
+                    const lineSvgString = `
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="color: saddlebrown; border-color: saddlebrown;"
+                        >
+                          <path
+                            d="M4 20L10 14L14 16L20 10"
+                            stroke="saddlebrown"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M4 20H20"
+                            stroke="saddlebrown"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                        `;
+
+                    const barSvgString = `
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="color: saddlebrown; border-color: saddlebrown;"
+                        >
+                          <path d="M4 20 H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" />
+                          <path d="M5 14 h3 v6 h-3 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                          <path d="M11 8 h3 v12 h-3 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                          <path d="M17 12 h3 v8 h-3 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                        </svg>
+                        `;
+
+
+                    const stackSvgString = `
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="color: saddlebrown; border-color: saddlebrown;"
+                        >
+                          <path d="M4 20 H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" />
+                          <path d="M6 14 h4 v6 h-4 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                          <path d="M6 8 h4 v6 h-4 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                          <path d="M14 12 h4 v8 h-4 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                          <path d="M14 6 h4 v6 h-4 Z" stroke="currentColor" stroke-width="1" fill="none" />
+                        </svg>
+                        `;
+
+                    const tiledSvgString = `
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="color: saddlebrown; border-color: saddlebrown;"
+                        >
+                          <path d="M4 4 h6 v6 h-6 Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                          <path d="M12 4 h6 v6 h-6 Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                          <path d="M4 12 h6 v6 h-6 Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                          <path d="M12 12 h6 v6 h-6 Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                        </svg>
+                        `;
+
+                    const pieSvgString = `
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style="color: saddlebrown; border-color: saddlebrown;"
+                        >
+                          <path
+                            d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z"
+                            stroke="saddlebrown"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M12 2V12L19 19"
+                            stroke="saddlebrown"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                        `;
 
                     const toolbox = {
                         show: true,
@@ -376,30 +478,29 @@
                             myLine: {
                                 show: true,
                                 title: 'Line',
-                                icon: 'path://M0,30 L10,20 L20,25 L30,10 L40,15 L50,5 L60,10',
+                                icon: lineSvgString,
                                 onclick: setLine
                             },
                             myBar: {
                                 show: true,
                                 title: 'Bar',
-                                icon: 'path://M5,30 H15 V10 H5 Z M25,30 H35 V5 H25 Z M45,30 H55 V20 H45 Z',
+                                icon: barSvgString,
                                 onclick: function () { setBar(false); }
                             },
                             myStack: {
                                 show: true,
                                 title: 'Stack',
-                                icon: 'path://M5,30 H55 V25 H5 Z M5,22 H55 V17 H5 Z M5,14 H55 V9 H5 Z',
+                                icon: stackSvgString,
                             },
                             myTiled: {
                                 show: true,
                                 title: 'Tiled',
-                                icon: 'path://M5,30 H15 V20 H5 Z M20,30 H30 V20 H20 Z M35,30 H45 V20 H35 Z M50,30 H60 V20 H50 Z',
+                                icon: tiledSvgString,
                             },
                             myPie: {
                                 show: true,
                                 title: 'Pie',
-                                icon: 'path://M12 2 A10 10 0 1 0 22 12 L12 12 Z',
-                                iconStyle: { color: 'saddlebrown', borderColor: 'saddlebrown' },
+                                icon: pieSvgString,
                                 onclick: setPie
                             },
                             restore: {
