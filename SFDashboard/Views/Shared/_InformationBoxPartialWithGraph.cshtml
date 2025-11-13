@@ -288,28 +288,32 @@
                     const chartDom = document.getElementById('chart_plot_@(tabcode)0' + i);
                     const echartLine = echarts.init(chartDom, theme);
 
-                    graph[j - 1].m_graphlegend.forEach((legend, idx) => {
+                    const currentGraph = graph[j - 1];
+                    const chartTitle = currentGraph?.m_graphtitle || '';
+
+                    currentGraph.m_graphlegend.forEach((legend, idx) => {
                         dataGraph.push({
                             name: legend,
                             type: 'line',
                             smooth: true,
                             itemStyle: { normal: { areaStyle: { type: 'default' } } },
-                            data: graph[j - 1].m_graphvalue[idx]
+                            data: currentGraph.m_graphvalue[idx]
                         });
                     });
 
                     const baseOption = {
-                        title: { text: 'Line Graph', subtext: 'Subtitle' },
+                        title: { text: chartTitle},
                         tooltip: { trigger: 'axis' },
-                        legend: { x: 220, y: 40, data: graph[j - 1].m_graphlegend },
+                        legend: { top: 30, data: currentGraph.m_graphlegend },
                         calculable: true,
-                        xAxis: [{ type: 'category', boundaryGap: false, data: graph[j - 1].m_graphlabel }],
+                        xAxis: [{ type: 'category', boundaryGap: false, data: currentGraph.m_graphlabel }],
                         yAxis: [{ type: 'value' }],
                         series: dataGraph
                     };
 
                     function cloneBase() { return JSON.parse(JSON.stringify(baseOption)); }
 
+<<<<<<< Updated upstream
                     function setLine() {
                         const opt = cloneBase();
                         opt.series.forEach(s => {
@@ -324,7 +328,23 @@
                     }
 
                     function setBar(stacked = false) {
+=======
+                    function updateTitle(type) {
+                        let titleText = chartTitle;
+                        switch (type) {
+                            case "line": titleText += "Line Graph"; break;
+                            case "bar": titleText += "Bar Graph"; break;
+                            case "pie": titleText += "Pie Chart"; break;
+                            case "stack": titleText += "Stacked"; break;
+                            default: titleText = chartTitle; break;
+                        }
+                        return titleText;
+                    }
+
+                    function switchChart(type) {
+>>>>>>> Stashed changes
                         const opt = cloneBase();
+                        opt.title.text = updateTitle(type);
 
                         if (opt.xAxis && opt.xAxis.length > 0) {
                             opt.xAxis[0].boundaryGap = true;
@@ -348,28 +368,58 @@
 
 
                     function setPie() {
+                        const chartIndex = i - 1;
+                        const graphItem = graph[chartIndex];
+                        if (!graphItem || !graphItem.m_graphlegend || !graphItem.m_graphvalue) return;
+
+                        const legends = graphItem.m_graphlegend;
+                        const values = graphItem.m_graphvalue;
+
+                        const pieData = legends.map((year, idx) => {
+                            const total = values[idx].reduce((sum, val) => sum + parseFloat(val || 0), 0);
+                            return { name: year, value: total };
+                        });
+
                         echartLine.clear();
                         echartLine.setOption({
-                            title: { text: 'Pie Chart', subtext: 'Categories', left: 'left' },
-                            tooltip: { trigger: 'item' },
-                            legend: { orient: 'vertical', left: 'left' },
-                            xAxis: [], yAxis: [],
+                            title: {
+                                text: updateTitle("pie"),
+                                left: 'left',
+                                top: 5,
+                                textStyle: {
+                                    fontSize: 18,     
+                                    fontWeight: 'bold',
+                                    color: '#333'     
+                                }
+                            },
+                            tooltip: { trigger: 'item', formatter: '{b} : {c} ({d}%)' },
+                            legend: {
+                                orient: 'horizontal',
+                                top: 35,           
+                                left: 'center',    
+                                data: legends,
+                                textStyle: {
+                                    fontSize: 13    
+                                }
+                            },
                             series: [{
-                                name: 'Categories',
                                 type: 'pie',
                                 radius: '55%',
-                                center: ['50%', '60%'],
-                                data: [
-                                    { value: 335, name: 'Category A' },
-                                    { value: 310, name: 'Category B' },
-                                    { value: 234, name: 'Category C' },
-                                    { value: 135, name: 'Category D' }
-                                ]
+                                center: ['50%', '60%'], 
+                                data: pieData,
+                                emphasis: {
+                                    itemStyle: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
                             }],
                             toolbox: toolbox
                         }, true);
                     }
 
+<<<<<<< Updated upstream
                     const lineSvgString = `
                         <svg
                           width="24"
@@ -471,6 +521,43 @@
                           />
                         </svg>
                         `;
+=======
+
+                    // === Custom SVGs ===
+                    const lineSvgString = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="color: saddlebrown;">
+                            <path d="M4 20L10 14L14 16L20 10" stroke="saddlebrown" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20H20"
+                            stroke="saddlebrown" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+                    const barSvgString = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="color: saddlebrown;">
+                            <path d="M4 20H20" stroke="saddlebrown" stroke-width="1" />
+                            <path d="M5 14h3v6h-3Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M11 8h3v12h-3Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M17 12h3v8h-3Z" stroke="saddlebrown" stroke-width="1" fill="none" /></svg>`;
+
+                    const stackSvgString = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="color: saddlebrown;">
+                            <path d="M4 20H20" stroke="saddlebrown" stroke-width="1" />
+                            <path d="M6 14h4v6h-4Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M6 8h4v6h-4Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M14 12h4v8h-4Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M14 6h4v6h-4Z" stroke="saddlebrown" stroke-width="1" fill="none" /></svg>`;
+
+                    const tiledSvgString = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="color: saddlebrown;">
+                            <path d="M4 4h6v6h-6Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M12 4h6v6h-6Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M4 12h6v6h-6Z" stroke="saddlebrown" stroke-width="1" fill="none" />
+                            <path d="M12 12h6v6h-6Z" stroke="saddlebrown" stroke-width="1" fill="none" /></svg>`;
+
+                    const pieSvgString = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="color: saddlebrown;">
+                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
+                            stroke="saddlebrown" stroke-width="2"/><path d="M12 2V12L19 19"
+                            stroke="saddlebrown" stroke-width="2"/></svg>`;
+>>>>>>> Stashed changes
 
                     const toolbox = {
                         show: true,
@@ -525,3 +612,8 @@
 
     });
 </script>
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
